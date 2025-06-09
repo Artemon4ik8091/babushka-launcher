@@ -1,8 +1,12 @@
 package com.aswer.babushka_phone
 
+import android.content.BroadcastReceiver
+import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.icu.text.SimpleDateFormat
 import android.net.Uri
+import android.os.BatteryManager
 import android.os.Bundle
 import android.os.Looper
 import android.provider.ContactsContract
@@ -29,12 +33,14 @@ class MainActivity : AppCompatActivity() {
         }
         val contacts: Button = findViewById(R.id.contacts)
         val alo: Button = findViewById(R.id.alo)
-        val logo: TextView = findViewById(R.id.logo)
+        val logo: TextView = findViewById(R.id.hi)
         val podval: TextView = findViewById(R.id.podval)
         val timeText: TextView = findViewById(R.id.date)
         val dateText: TextView = findViewById(R.id.time)
+        val batteryStatusText: TextView = findViewById(R.id.battery)
         val updateHandler = android.os.Handler(Looper.getMainLooper())
         lateinit var updateRunnable: Runnable
+        lateinit var batteryReceiver: BroadcastReceiver
 
         fun getTimeBasedGreeting(): String {
             val calendar = Calendar.getInstance()
@@ -49,12 +55,45 @@ class MainActivity : AppCompatActivity() {
         }
         var greetingText = logo
 
+        fun updateBatteryStatus(intent: Intent) {
+            // Получаем уровень заряда
+            val level = intent.getIntExtra(BatteryManager.EXTRA_LEVEL, -1)
+            val scale = intent.getIntExtra(BatteryManager.EXTRA_SCALE, -1)
+            val batteryPct = level * 100 / scale.toFloat()
+
+            // Определяем статус зарядки
+            val status = intent.getIntExtra(BatteryManager.EXTRA_STATUS, -1)
+            val isCharging = status == BatteryManager.BATTERY_STATUS_CHARGING ||
+                    status == BatteryManager.BATTERY_STATUS_FULL
+
+            // Устанавливаем текст
+            batteryStatusText.text = "Заряд батареи: ${batteryPct.toInt()}%"
+        }
+
+        fun registerBatteryReceiver() {
+            batteryReceiver = object : BroadcastReceiver() {
+                override fun onReceive(context: Context, intent: Intent) {
+                    updateBatteryStatus(intent)
+                }
+            }
+            // Регистрируем приемник
+            registerReceiver(
+                batteryReceiver,
+                IntentFilter(Intent.ACTION_BATTERY_CHANGED)
+            )
+        }
+
         fun updateGreeting() {
             greetingText.text = getTimeBasedGreeting()
         }
 
         fun onResume() {
             super.onResume()
+            val batteryIntent = registerReceiver(
+                null,
+                IntentFilter(Intent.ACTION_BATTERY_CHANGED)
+            )
+            batteryIntent?.let { updateBatteryStatus(it) }
             updateGreeting() // Обновляем при возвращении в приложение
         }
 

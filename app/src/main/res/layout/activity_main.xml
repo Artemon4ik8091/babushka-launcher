@@ -11,13 +11,14 @@
         android:id="@+id/alo"
         android:layout_width="396dp"
         android:layout_height="256dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="44dp"
         android:background="#4CAF50"
         android:backgroundTint="#4CAF50"
-        android:text="Быстро позвонить"
+        android:text="Последние вызовы"
         android:textColorLink="#E91E63"
         android:textSize="48sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.533"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/time"
         app:rippleColor="#E91E63"
@@ -37,13 +38,14 @@
         app:layout_constraintTop_toBottomOf="@+id/alo" />
 
     <TextView
-        android:id="@+id/logo"
+        android:id="@+id/hi"
         android:layout_width="372dp"
-        android:layout_height="46dp"
-        android:layout_marginTop="32dp"
-        android:text="бабушка-фон 3000 super ultra pro maxxx"
+        android:layout_height="27dp"
+        android:layout_marginTop="28dp"
+        android:text="good day"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.487"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -59,8 +61,19 @@
 
     <TextView
         android:id="@+id/time"
-        android:layout_width="377dp"
-        android:layout_height="45dp"
+        android:layout_width="376dp"
+        android:layout_height="30dp"
+        android:text="TextView"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/date" />
+
+    <TextView
+        android:id="@+id/battery"
+        android:layout_width="375dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="28dp"
         android:text="TextView"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -71,10 +84,10 @@
         android:id="@+id/date"
         android:layout_width="375dp"
         android:layout_height="49dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="4dp"
         android:text="TextView"
         android:textSize="34sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/logo" />
+        app:layout_constraintTop_toBottomOf="@+id/hi" />
 </androidx.constraintlayout.widget.ConstraintLayout>
